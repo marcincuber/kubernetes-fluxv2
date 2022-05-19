@@ -1,0 +1,57 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: aws-vpc-cni
+  namespace: kube-system
+spec:
+  releaseName: aws-vpc-cni
+  chart:
+    spec:
+      chart: aws-vpc-cni
+      version: 1.1.16
+      sourceRef:
+        kind: HelmRepository
+        name: aws-vpc-cni
+        namespace: kube-system
+  interval: 1h0m0s
+  install:
+    remediation:
+      retries: 3
+  values:
+    nameOverride: aws-node
+
+    init:
+      image:
+        tag: v1.11.0
+        region: eu-west-1
+        account: "602401143452"   
+        pullPolicy: Always
+        domain: "amazonaws.com"  
+      env:
+        DISABLE_TCP_EARLY_DEMUX: "true"
+        ENABLE_IPv6: "false"
+      securityContext:
+        privileged: true
+
+    image:
+      region: eu-west-1
+      tag: v1.11.0
+      account: "602401143452"   
+      domain: "amazonaws.com"  
+      pullPolicy: Always
+
+    env:
+      AWS_VPC_K8S_CNI_EXTERNALSNAT: "true"
+      AWS_VPC_K8S_PLUGIN_LOG_LEVEL: "DEBUG"
+      ENABLE_POD_ENI: "true"
+
+    crd:
+      create: true
+
+    serviceAccount:
+      create: true
+      annotations: {}
+        # eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
+    # cri:
+    #   hostPath: "/var/run/containerd/containerd.sock"
