@@ -1,0 +1,50 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cluster-autoscaler
+  namespace: kube-system
+spec:
+  releaseName: cluster-autoscaler
+  chart:
+    spec:
+      # renovate: registryUrl=https://kubernetes.github.io/autoscaler
+      chart: cluster-autoscaler
+      version: 9.18.1
+      sourceRef:
+        kind: HelmRepository
+        name: autoscaler
+        namespace: kube-system
+  interval: 1h0m0s
+  install:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: k8s.gcr.io/autoscaling/cluster-autoscaler
+      tag: v1.22.2
+    replicaCount: 1
+    awsRegion: eu-west-1
+    cloudProvider: aws
+    sslCertPath: /etc/ssl/certs/ca-bundle.crt
+    rbac:
+      create: true
+      # serviceAccount:
+      #   annotations:
+      #     eks.amazonaws.com/role-arn: "arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME"
+    autoDiscovery:
+      clusterName: "test" # change this to your cluster name
+    topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: topology.kubernetes.io/zone
+      whenUnsatisfiable: DoNotSchedule
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/instance: cluster-autoscaler
+    extraArgs:
+      logtostderr: true
+      stderrthreshold: info
+      v: 4
+      leader-elect: true
+      skip-nodes-with-local-storage: true
+      expander: random
