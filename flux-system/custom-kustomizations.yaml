@@ -180,3 +180,17 @@ spec:
     kind: GitRepository
     name: flux-system
   validation: client
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: seldon-system
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  path: ./reloader
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: seldon-system
+  validation: client
