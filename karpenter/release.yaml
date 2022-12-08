@@ -3,27 +3,24 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: karpenter
-  namespace: kube-system
+  namespace: karpenter
 spec:
   releaseName: karpenter
   chart:
     spec:
-      # renovate: registryUrl=https://charts.karpenter.sh/
       chart: karpenter
-      version: 0.10.1
+      version: v0.19.3
       sourceRef:
         kind: HelmRepository
         name: karpenter
-        namespace: kube-system
+        namespace: flux-system
   interval: 1h0m0s
   install:
     remediation:
       retries: 3
   values:
-    topologySpreadConstraints:
-    - maxSkew: 1
-      topologyKey: topology.kubernetes.io/zone
-      whenUnsatisfiable: ScheduleAnyway
+    controller:
+      image: public.ecr.aws/karpenter/controller:v0.19.3
     replicas: 2
     serviceAccount:
       name: karpenter
