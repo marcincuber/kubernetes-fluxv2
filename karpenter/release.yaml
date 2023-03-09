@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: karpenter
-      version: v0.24.0
+      version: v0.27.0
       sourceRef:
         kind: HelmRepository
         name: karpenter
@@ -20,13 +20,14 @@ spec:
       retries: 3
   values:
     controller:
-      image: public.ecr.aws/karpenter/controller:v0.24.0
-    replicas: 2
+      image: 
+        repository: public.ecr.aws/karpenter/controller
+        tag: v0.27.0
+    replicas: 3
     serviceAccount:
       name: karpenter
     logLevel: debug
     # clusterName: "YOUR_CLUSTER_NAME"
-    # clusterEndpoint: "YOUR_CLUSTER_ENDPOINT"
     # serviceAccount:
     #   annotations:
     #     eks.amazonaws.com/role-arn: "arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME"
