@@ -8,13 +8,12 @@ spec:
   releaseName: external-secrets
   chart:
     spec:
-      # renovate: registryUrl=https://charts.external-secrets.io
       chart: external-secrets
-      version: 0.6.1
+      version: 0.8.1
       sourceRef:
         kind: HelmRepository
         name: external-secrets
-        namespace: kube-system
+        namespace: flux-system
   interval: 1h0m0s
   install:
     remediation:
