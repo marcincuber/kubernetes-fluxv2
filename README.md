@@ -4,7 +4,7 @@ Kubernetes- helm deployments using Flux V2
 ### Fluxv2
 [Fluxv2]([https://github.com/fluxcd/flux](https://fluxcd.io/)) is a [Gitops](https://www.weave.works/technologies/gitops/) tool that ensures that a given cluster's state matches what is in git. This allows developers to deploy any new configuration to a cluster by simply commiting to the cluster's directory in this repo. A Flux controller in each cluster polls its designated directory and will apply any new changes once found.
 
- <img src="https://github.com/fluxcd/flux2/raw/main/docs/_files/gitops-toolkit.png">
+ <img src="https://fluxcd.io/img/diagrams/gitops-toolkit.png">
 
 #### Official FluxV2 docs, install and upgrade instructions
 
