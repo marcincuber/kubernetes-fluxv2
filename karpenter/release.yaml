@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: karpenter
-      version: v0.27.3
+      version: v0.31.1
       sourceRef:
         kind: HelmRepository
         name: karpenter
@@ -19,10 +19,6 @@ spec:
     remediation:
       retries: 3
   values:
-    controller:
-      image: 
-        repository: public.ecr.aws/karpenter/controller
-        tag: v0.27.3
     replicas: 3
     serviceAccount:
       name: karpenter
