@@ -25,5 +25,3 @@ spec:
         name: ebs-csi-controller-sa
         # annotations:
         #   eks.amazonaws.com/role-arn: "arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME"
-    node:
-      tolerateAllTaints: true
