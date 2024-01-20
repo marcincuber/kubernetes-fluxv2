@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: ebs-csi-driver
@@ -7,7 +7,6 @@ spec:
   releaseName: ebs-csi-driver
   chart:
     spec:
-      # renovate: registryUrl=https://kubernetes-sigs.github.io/aws-ebs-csi-driver
       chart: aws-ebs-csi-driver
       version: 2.26.1
       sourceRef:
