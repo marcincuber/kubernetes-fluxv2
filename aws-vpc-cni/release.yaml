@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: aws-vpc-cni
@@ -23,7 +23,7 @@ spec:
 
     init:
       image:
-        tag: v1.11.0
+        tag: v1.18.0
         region: eu-west-1
         account: "602401143452"   
         pullPolicy: Always
@@ -34,9 +34,19 @@ spec:
       securityContext:
         privileged: true
 
+    nodeAgent:
+      enabled: true
+      image:
+        tag: v1.1.0
+        domain: amazonaws.com
+        region: eu-west-1
+        endpoint: ecr
+        account: "602401143452"
+        pullPolicy: Always
+
     image:
       region: eu-west-1
-      tag: v1.11.0
+      tag: v1.18.0
       account: "602401143452"   
       domain: "amazonaws.com"  
       pullPolicy: Always

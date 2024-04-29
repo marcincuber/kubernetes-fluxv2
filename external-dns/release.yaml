@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: external-dns
@@ -8,9 +8,8 @@ spec:
   releaseName: external-dns
   chart:
     spec:
-      # renovate: registryUrl=https://kubernetes-sigs.github.io/external-dns/
       chart: external-dns
-      version: 1.9.0
+      version: 1.14.4
       sourceRef:
         kind: HelmRepository
         name: external-dns
@@ -20,8 +19,9 @@ spec:
     remediation:
       retries: 3
   values:
-    aws:
-      region: eu-west-1
+    fullnameOverride: external-dns-private
+    provider:
+      name: aws
     sources:
       - service
       - ingress

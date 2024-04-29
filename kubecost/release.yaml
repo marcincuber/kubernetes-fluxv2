@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: kubecost
@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: cost-analyzer
-      version: 1.93.2
+      version: 2.2.0
       sourceRef:
         kind: HelmRepository
         name: kubecost
@@ -19,13 +19,6 @@ spec:
     remediation:
       retries: 3
   values:
-    prometheus:
-      kube-state-metrics:
-        disabled: true
-      nodeExporter:
-        enabled: false
-    networkCosts:
-      enabled: false
     kubecostMetrics:
       exporter:
         enabled: true

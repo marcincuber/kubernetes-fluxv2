@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: external-secrets
@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: external-secrets
-      version: 0.8.1
+      version: 0.9.16
       sourceRef:
         kind: HelmRepository
         name: external-secrets
@@ -20,6 +20,8 @@ spec:
       retries: 3
   values:
     fullnameOverride: external-secrets-operator
+    leaderElect: true
+    replicaCount: 3
     # serviceAccount:
       # annotations:
       #   eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
